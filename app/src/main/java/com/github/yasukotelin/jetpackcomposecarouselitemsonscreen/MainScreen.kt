@@ -1,6 +1,5 @@
 package com.github.yasukotelin.jetpackcomposecarouselitemsonscreen
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
@@ -9,10 +8,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberImagePainter
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.github.yasukotelin.jetpackcomposecarouselitemsonscreen.ui.theme.JetpackComposeCarouselItemsOnScreenTheme
 import kotlin.math.absoluteValue
 
@@ -65,16 +66,16 @@ fun ImageCarousel(
                         .width(itemWidth)
                         .wrapContentHeight()
                 ) {
-                    Image(
-                        painter = rememberImagePainter(
-                            data = "https://placehold.jp/3d4070/ffffff/150x120.png",
-                        ),
-                        contentScale = ContentScale.Fit,
+                    AsyncImage(
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data("https://placehold.jp/3d4070/ffffff/150x120.png")
+                            .crossfade(true)
+                            .build(),
                         contentDescription = null,
+                        contentScale = ContentScale.FillWidth,
                         modifier = Modifier
-                            .aspectRatio(150/120f)
                             .fillMaxWidth()
-                            .background(Color(0xFFEDEDED)),
+                            .background(Color(0xFFEDEDED))
                     )
                 }
             }
